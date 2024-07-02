@@ -43,13 +43,11 @@ class TCPProxy(threading.Thread):
 					self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 				self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 				if SSL:
-					self.sock = ssl.wrap_socket(
-						self.sock,
-						server_side=True,
-						keyfile=SSL_KEYFILE,
-						certfile=SSL_CERTFILE,
-						do_handshake_on_connect=True,
-					)
+					print(SSL_KEYFILE)
+					print(SSL_CERTFILE)
+					ctx = ssl.SSLContext()
+					ctx.load_cert_chain(keyfile=SSL_KEYFILE, certfile=SSL_CERTFILE)
+					self.sock = ctx.wrap_socket(self.sock, server_side=True, do_handshake_on_connect=True)
 				self.sock.bind((self.from_host, self.from_port))
 				self.sock.listen(1)
 				self.logger.info(f"Serving {BLUE}{self.from_host}{END}:{GREEN}{self.from_port}{END}" +\

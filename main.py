@@ -1,3 +1,4 @@
+#!/bin/python
 from sys import argv
 from os import _exit, getpid
 from importlib import import_module, reload

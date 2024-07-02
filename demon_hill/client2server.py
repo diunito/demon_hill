@@ -18,9 +18,13 @@ class Client2Server(threading.Thread):
 			else:
 				self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			if SSL:
-				self.server = ssl.wrap_socket(
+				print(SSL_CA_CERT)
+				ctx = ssl.SSLContext()
+				ctx.load_verify_locations(
+					cafile=SSL_CA_CERT,
+				)
+				self.server = ctx.wrap_socket(
 					self.server,
-					ca_certs=SSL_CA_CERT,
 					do_handshake_on_connect=True,
 				)
 			self.server.connect((to_host, to_port))
