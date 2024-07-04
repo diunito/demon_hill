@@ -83,6 +83,8 @@ class Client2Server(threading.Thread):
 		try:
 			for f in filters:
 				data = f(self.logger, data, self.server_history, self.client_history, self.id)
+				if data is False:
+					self.exit("blocked")
 			write.sendall(data)
 
 		except Exception as e:

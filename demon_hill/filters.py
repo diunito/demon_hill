@@ -5,9 +5,11 @@ from .http import *
 
 
 
-def custom_filter(logger:logging.Logger, data:bytes, server_history:bytes, client_history:bytes, id:int) -> bytes:
+def custom_filter(logger:logging.Logger, data:bytes, server_history:bytes, client_history:bytes, id:int) -> bytes | bool:
 
-	# write here
+	#if server_history.decode().strip().endswith("leave empty for player):"):
+	#	if len(data.decode().strip()) > 16:
+	#		return False
 
 	return data
 
@@ -32,12 +34,12 @@ SERVER_FILTERS = [
 	regex_filter,
 	# http_response,
 	# custom_filter,
-	# info_filter,
+	info_filter,
 ]
 
 CLIENT_FILTERS = [
 	# custom_filter,
-	# info_filter,
+	info_filter,
 ]
 
 
